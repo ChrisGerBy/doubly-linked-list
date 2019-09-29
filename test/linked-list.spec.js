@@ -179,15 +179,4 @@ describe('LinkedList', () => {
             expect(list.indexOf(3)).to.equal(-1);
         })
     });
-    describe('chaining', () => {
-        it('append reverse deleteAt insertAt methods should be chainable', () => {
-            const list = new LinkedList();
-
-            function fn() {
-                list.append(4).reverse().deleteAt(0).clear().insertAt(0, 3);
-            }
-
-            expect(fn).to.not.throw();
-        })
-    })
 });

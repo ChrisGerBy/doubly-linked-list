@@ -19,6 +19,7 @@ class LinkedList {
 			this._tail = node;
             this.length ++;
         }
+        return this;
     }
 
     head() {
@@ -45,9 +46,15 @@ class LinkedList {
     insertAt(index, data) {
         let node = new Node(data);        
         if (index === 0) {
-            this._head.prev = node;
-            node.next = this._head;
+            let next;
             this._head = node;
+            if (this.length) {
+                next = this._head;
+            } else {
+                next = null;
+                this._tail = node;
+            }
+            node.next = next;
             this.length ++;            
         } else {
             let current = this._head;
@@ -61,6 +68,7 @@ class LinkedList {
             node.next = current;
             this.length ++;
         }
+        return this;
     }
 
     isEmpty() {
@@ -69,19 +77,22 @@ class LinkedList {
     }
 
     clear() {
-        let current = this._head;	
-		while (current.next) {
-			current.next = null;
+        if (this.length !== 0) {
+            let current = this._head;	
+            while (current.next) {
+                current.next = null;
+            }
+            this._head.data = null;
+            this._tail.data = null;
+            this.length = 0;
         }
-		this._head.data = null;
-		this._tail.data = null;
-		this.length = 0;
-      }
+      return this;
+    }
 
     deleteAt(index) {
-        if (index === 0) {
-            this._head = this._head.next;
-            this._head.prev = null;
+        if (this.length === 1 && index === 0) {
+            this._head = null;
+            this._tail = null;
             this.length --;
         } else {
             let current = this._head;
@@ -93,12 +104,12 @@ class LinkedList {
             current.next.prev = current.prev;
             this.length--;
         }
-
+        return this;
     }
 
     reverse() {
         if (this.length === 0) {
-            return;
+            return this;
         } else {           
             let counter = this.length - 1;
             let tail = this._tail;
@@ -116,7 +127,9 @@ class LinkedList {
                     this._tail = node;
                 }
             }
+            return this;
         }
+        
     }
 
     indexOf(data) {
